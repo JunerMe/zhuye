@@ -7,6 +7,6 @@ from wtforms.validators import DataRequired
 
 
 class SiteForm(Form):
-    sitename = StringField('名称',validators=[DataRequired()])
-    website = StringField('网址',validators=[DataRequired()])
+    name = StringField('名称',validators=[DataRequired()])
+    site = StringField('网址',validators=[DataRequired()])
     submit = SubmitField('添加网址')

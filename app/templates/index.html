@@ -6,7 +6,11 @@
     <title></title>
 </head>
 <body>
-<h1>Hello,主页</h1>
-{{ wtf.quick_form(form) }}`
+    <h1>我的地盘儿！</h1>
+    {{ wtf.quick_form(form) }}
+    {% for site in sites %}
+    <a href="http://{{ site.site }}">{{site.name}}</a>
+
+    {% endfor %}
 </body>
 </html>
