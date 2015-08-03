@@ -2,23 +2,19 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
-
-
-
 {% block page_content %}
 <div class="page-header">
     <h1>我的地盘儿！</h1>
 
 </div>
-<div>
+<div >
     {{ wtf.quick_form(form) }}
 </div>
 
 
 <div class="container">
     <div class="container-fluid">
-        <a href="{{ url_for('.editsite')}}" class="btn btn-success " role="button">编辑页面</a>
+        <a href="{{ url_for('.editsite')}}" class="btn btn-success btn-block" role="button">编辑页面</a>
     </div>
 
     <div class="container-fluid">

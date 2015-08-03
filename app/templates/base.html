@@ -1,5 +1,6 @@
 {% extends "bootstrap/base.html" %}
 
+
 {% block title %}主页{% endblock %}
 
 {% block head %}
@@ -29,9 +30,14 @@
             <a class="navbar-brand" href="{{ url_for('main.index') }}">主页</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('main.index') }}">Home</a></li>
-                <li><a href="{{ url_for('auth.register') }}">注册</a></li>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated() %}
+                    <li><a href="{{ url_for('auth.logout') }}">退出</a></li>
+                {% else %}
+                     <li><a href="{{ url_for('auth.register') }}">注册</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -40,7 +46,12 @@
 
 {% block content %}
 <div class="container">
-
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+{% endfor %}
 
     {% block page_content %}{% endblock %}
 </div>

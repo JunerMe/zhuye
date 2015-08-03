@@ -3,7 +3,7 @@ __author__ = 'Juner'
 
 #注册用户表单
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from ..models import UserModel
 
@@ -25,4 +25,9 @@ class RegisterForm(Form):
         if UserModel.query.filter_by(username=filed.data).first():
             raise ValueError('呃呃，这个用户名已经被注册啦，换一个吧')
 
+class LoginForm(Form):
+    email = StringField('邮箱',validators=[InputRequired(), Email()])
+    password = PasswordField('密码', validators=[InputRequired(), Length(6,64)])
+
+    submit = SubmitField('登录')
 
