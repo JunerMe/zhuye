@@ -6,7 +6,7 @@ from .forms import RegisterForm, LoginForm
 from flask import render_template, redirect, url_for, flash
 from ..models import UserModel
 from .. import db
-from flask_login import login_user, logout_user, login_required,
+from flask_login import login_user, logout_user, login_required
 
 
 
@@ -31,7 +31,7 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             flash('你已经登录la')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.user', username=user.username))
         flash('用户名或密码错误！')
     return render_template('auth/login.html', form =form)
 
@@ -41,6 +41,9 @@ def logout():
     logout_user()
     flash('你已经退出了')
     return redirect(url_for('main.index'))
+
+
+
 
 
 
