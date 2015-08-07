@@ -4,6 +4,12 @@ from . import db
 from flask_login import UserMixin
 from . import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
+
+user_site = db.Table('user_site',
+                     db.Column('user_id', db.Integer, db.ForeignKey('usersmodel.id')),
+                     db.Column('site_id', db.Integer, db.ForeignKey('sitesmodel.id'))
+                     )
+
 '''
 class User_Site_Model(db.Model):
     __tablename__ = 'user_sites'
@@ -20,8 +26,19 @@ class SiteModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     site = db.Column(db.String(64), unique=True)
+
+
+
+    '''一对多关系
     user_id = db.Column(db.Integer, db.ForeignKey('usersmodel.id'))
     '''
+
+
+    #多对多关系1
+
+
+
+    '''多对多关系2
     users = db.relationship('User_Site_Model',
                             foreign_keys = [User_Site_Model.user_id],
                             backref=db.backref('sites', lazy='joined'),
@@ -37,6 +54,11 @@ class UserModel(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+
+
+    sites = db.relationship('SiteModel', secondary= user_site, backref=db.backref('user', lazy='dynamic'),
+                            lazy='dynamic')
+
     '''
     sites = db.relationship('User_Site_Model',
                             foreign_keys = [User_Site_Model.user_id],
@@ -44,7 +66,9 @@ class UserModel(UserMixin, db.Model):
                             lazy='dynamic',
                             cascade='all, delete-orphan')
     '''
-    sites = db.relationship('SiteModel', backref = 'user', lazy='dynamic')
+
+
+    #sites = db.relationship('SiteModel', backref = 'user', lazy='dynamic')
 
     @property
     def password(self):

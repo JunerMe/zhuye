@@ -7,6 +7,7 @@ from flask_wtf import Form
 from wtforms import StringField, SubmitField, ValidationError
 from wtforms.validators import InputRequired, length
 from ..models import SiteModel
+from flask_login import current_user
 
 #首页表单
 class SiteForm(Form):
@@ -16,15 +17,33 @@ class SiteForm(Form):
 
 
     def validate_name(self,field):
-        if SiteModel.query.filter_by(name=field.data).first():
-            raise ValidationError('该网址已经被添加了哦')
+        namess = SiteModel.query.filter_by(name=field.data).first()
+        current_userss = current_user._get_current_object()
+        if namess is not None:
+            userss = namess.user.all()
+            if current_userss in userss:
+                raise ValidationError('该网站名已经被添加了哦')
+
+
+        '''if SiteModel.query.filter_by(name=field.data).first():
+            raise ValidationError('该网址已经被添加了哦')'''
 
 
     def validate_site(self,field):
         if field.data[:4] != 'www.':
             raise ValidationError('网址应该以“www.”开头！请重新输入')
-        if SiteModel.query.filter_by(site=field.data).first():
-            raise ValidationError('该网站名已经被添加了哦')
+
+        sitess = SiteModel.query.filter_by(site=field.data).first()
+        current_userss = current_user._get_current_object()
+        if sitess is not None:
+            userss = sitess.user.all()
+            if current_userss in userss:
+                raise ValidationError('该网站名已经被添加了哦')
+        
+
+
+        '''if SiteModel.query.filter_by(site=field.data).first():
+            raise ValidationError('该网站名已经被添加了哦')'''
 
 
 #网页编辑页面表单

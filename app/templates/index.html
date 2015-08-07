@@ -4,22 +4,29 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>我的地盘儿！</h1>
+    <h1>赶紧注册一个吧</h1>
 
 </div>
 <div >
-    {{ wtf.quick_form(form) }}
+
+        {{ wtf.quick_form(form) }}
+    
 </div>
 
-
 <div class="container">
-    <div class="container-fluid">
-        <a href="{{ url_for('.editsite')}}" class="btn btn-success btn-block" role="button">编辑页面</a>
-    </div>
 
     <div class="container-fluid">
+        <h3>排序前</h3>
     {% for site in sites %}
      <a href="http://{{ site.site }}" class="btn btn-default btn-lg " role="button">{{site.name}}</a>
+    {% endfor %}
+    </div>
+        <h3>排序后</h3>
+    <div class="container-fluid">
+
+    {% for site in sorted_sites %}
+
+     <a href="http://{{ site[2] }}" class="btn btn-default btn-primary btn-lg " role="button">{{site[0]}}</a>
     {% endfor %}
     </div>
 
